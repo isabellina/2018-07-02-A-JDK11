@@ -5,9 +5,14 @@
 package it.polito.tdp.extflightdelays;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.extflightdelays.model.Airport;
+import it.polito.tdp.extflightdelays.model.AirportDistance;
 import it.polito.tdp.extflightdelays.model.Model;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,7 +40,7 @@ public class ExtFlightDelaysController {
     private Button btnAnalizza; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbBoxAeroportoPartenza"
-    private ComboBox<?> cmbBoxAeroportoPartenza; // Value injected by FXMLLoader
+    private ComboBox<Airport> cmbBoxAeroportoPartenza; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnAeroportiConnessi"
     private Button btnAeroportiConnessi; // Value injected by FXMLLoader
@@ -48,12 +53,37 @@ public class ExtFlightDelaysController {
 
     @FXML
     void doAnalizzaAeroporti(ActionEvent event) {
+    	try {
+    		double s = Double.parseDouble(distanzaMinima.getText());
+    		this.model.creaGrafo(s);
+    		txtResult.appendText("Archi : " + this.model.nArchi());
+    		txtResult.appendText("Vertici : " + this.model.nVertici());
+    		
+    		ObservableList<Airport> l = FXCollections.observableList(this.model.getAeroporti());
+    		cmbBoxAeroportoPartenza.setItems(l);
+    		cmbBoxAeroportoPartenza.setValue(l.get(0));
+    		
+    		
+    	}
+    	
+    	catch(NumberFormatException n) {
+    		txtResult.appendText("Devi inserire un numero");
+    	}
 
     }
 
     @FXML
     void doCalcolaAeroportiConnessi(ActionEvent event) {
-
+    	txtResult.clear();
+    	List<AirportDistance> adia = this.model.getAdiacenti(cmbBoxAeroportoPartenza.getValue());
+    	if(adia.size()==0) {
+    		txtResult.appendText("non ci sono aereoporti connness");
+    	}
+    	else {
+    	for(AirportDistance c : adia) {
+    		txtResult.appendText(c.toString()+ "\n");
+    	 }
+    	}
     }
 
     @FXML
