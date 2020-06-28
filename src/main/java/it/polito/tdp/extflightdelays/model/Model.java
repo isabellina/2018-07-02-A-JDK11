@@ -24,18 +24,23 @@ public class Model {
 		this.mappaA = new HashMap<Integer,Airport>();
 		}
 	
-	public List<Airport> getAeroporti(){
+	/*public List<Airport> getAeroporti(){
 		List<Airport> listaAereoporti = new LinkedList<Airport>(this.dao.loadAllAirports());
 		return listaAereoporti;
 		
-	} 
+	} */
+	
+	public List<Airport> getaerei(){
+		
+		return  new LinkedList<Airport>(mappaA.values());
+	}
 	
 	
 	public void creaGrafo(double d) {
 		this.grafo = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
-		System.out.println(this.dao.loadAllAirports());
-		Graphs.addAllVertices(this.grafo, this.getAeroporti());
-		this.dao.loadAllAirports2(mappaA);
+		//System.out.println(this.dao.loadAllAirports());
+		Graphs.addAllVertices(this.grafo, this.dao.loadAllAirports2(mappaA).values());
+		//this.dao.loadAllAirports2(mappaA);
 		for(Arco a : this.dao.getArchi(d, this.mappaA)) {
 			if(this.grafo.containsVertex(a.getA1()) && this.grafo.containsVertex(a.getA2())) {
 				DefaultWeightedEdge edge = this.grafo.getEdge(a.getA1(), a.getA2());

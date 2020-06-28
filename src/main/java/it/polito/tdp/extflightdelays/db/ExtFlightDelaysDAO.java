@@ -39,7 +39,7 @@ public class ExtFlightDelaysDAO {
 		}
 	}
 
-	public List<Airport> loadAllAirports() {
+	/*public List<Airport> loadAllAirports() {
 		String sql = "SELECT * FROM airports "
 				+ "order by airports.AIRPORT ASC";
 		List<Airport> result = new ArrayList<Airport>();
@@ -65,11 +65,12 @@ public class ExtFlightDelaysDAO {
 			System.out.println("Errore connessione al database");
 			throw new RuntimeException("Error Connection Database");
 		}
-	}	
+	}	*/
 		
-		public void loadAllAirports2(Map<Integer,Airport>mappa) {
-			String sql = "SELECT * FROM airports";
-			
+		public Map<Integer,Airport> loadAllAirports2(Map<Integer,Airport>mappa) {
+			String sql = "SELECT * FROM airports "
+					+ "order by airports.AIRPORT ASC";
+			//List<Airport> result = new ArrayList<Airport>();
 
 			try {
 				Connection conn = ConnectDB.getConnection();
@@ -81,13 +82,13 @@ public class ExtFlightDelaysDAO {
 					Airport airport = new Airport(rs.getInt("ID"), rs.getString("IATA_CODE"), rs.getString("AIRPORT"),
 							rs.getString("CITY"), rs.getString("STATE"), rs.getString("COUNTRY"), rs.getDouble("LATITUDE"),
 							rs.getDouble("LONGITUDE"), rs.getDouble("TIMEZONE_OFFSET"));
-					
+					//result.add(airport);
 					mappa.put(rs.getInt("ID"), airport);
 					}
 				}
 
 				conn.close();
-				
+				return  mappa;
 
 			} catch (SQLException e) {
 				e.printStackTrace();

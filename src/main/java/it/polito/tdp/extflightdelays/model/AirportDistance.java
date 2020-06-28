@@ -48,10 +48,16 @@ public class AirportDistance implements Comparable<AirportDistance> {
 
 	@Override
 	public int compareTo(AirportDistance o) {
-		// TODO Auto-generated method stub
+	 if(this.getPeso()<o.getPeso()) {
+		 return 1;
+	 }
+	 else if(this.getPeso()>o.getPeso()) {
+		 return -1;
+	 }
 		
-		//return (this.peso.compareTo(o.getPeso())*-1);
 		return 0;
+	
+		
 	} 
 	
 	

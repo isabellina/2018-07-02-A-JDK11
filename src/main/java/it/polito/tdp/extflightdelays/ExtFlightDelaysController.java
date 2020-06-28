@@ -59,7 +59,7 @@ public class ExtFlightDelaysController {
     		txtResult.appendText("Archi : " + this.model.nArchi());
     		txtResult.appendText("Vertici : " + this.model.nVertici());
     		
-    		ObservableList<Airport> l = FXCollections.observableList(this.model.getAeroporti());
+    		ObservableList<Airport> l = FXCollections.observableList((List<Airport>) this.model.getaerei());
     		cmbBoxAeroportoPartenza.setItems(l);
     		cmbBoxAeroportoPartenza.setValue(l.get(0));
     		
